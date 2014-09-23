@@ -4,41 +4,14 @@
     <a href="/logout">Logout</a>
     <div class="add-task">
         <h3>Add a new task:</h3>
-        <table>
-            <tr>
-                <form action="{{ url_for('new_task') }}" method="post">
-                    {{ form.csrf_token }}
-                    <td>
-                        <label>Task Name:</label>
-                        <input name="name" type="text">
-                    </td>
-                    <td>
-                        <label>Due Date (mm/dd/yyyy):</label>
-                        <input name="due_date" type="text" width="120px">
-                    </td>
-                    <td>
-                        <label>Priority:</label>
-                        <select name="priority" width="100px">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </select>
-                    </td>
-                    <td>
-                        &nbsp;
-                        &nbsp;
-                        <input class="button" type="submit" value="Save">
-                    </td>
-                </form>
-            </tr>
-        </table>
+        <form action="{{ url_for('new_task') }}" method="post">
+            {{ form.csrf_token }}
+            <p>{{ form.name.label }}: {{ form.name }}<br>
+               {{ form.due_date.label }}: {{ form.due_date }}&nbsp;
+               {{ form.priority.label }}: {{ form.priority }}
+            </p>
+            <p><input class="button" type="submit" value="Submit"></p>
+        </form>
     </div>
     <div class="entries">
         <br>
@@ -48,17 +21,21 @@
             <table>
                 <thead>
                     <tr>
-                        <th width="300px"><strong>Task Name</strong></th>
-                        <th width="100px"><strong>Due Date</strong></th>
+                        <th width="200px"><strong>Task Name</strong></th>
+                        <th width="75px"><strong>Due Date</strong></th>
+                        <th width="100px"><strong>Posted Date</strong></th>
                         <th width="50px"><strong>Priority</strong></th>
+                        <th width="90px"><strong>Posted By</strong></th>
                         <th><strong>Actions</strong></th>
                     </tr>
                 </thead>
                 {% for o in open_tasks %}
                     <tr>
-                        <td width="300px">{{ o.name }}</td>
-                        <td width="100px">{{ o.due_date }}</td>
+                        <td width="200px">{{ o.name }}</td>
+                        <td width="75px">{{ o.due_date }}</td>
+                        <td width="100px">{{ o.posted_date }}</td>
                         <td width="50px">{{ o.priority }}</td>
+                        <td width="90px">{{ o.poster.name }}</td>
                         <td>
                             <a href="{{ url_for('delete_entry', task_id=
                                 o.task_id) }}">Delete</a> - 
@@ -78,9 +55,11 @@
             <table>
                 <thead>
                     <tr>
-                        <th width="300px"><strong>Task Name</strong></th>
-                        <th width="100px"><strong>Due Date</strong></th>
+                        <th width="200px"><strong>Task Name</strong></th>
+                        <th width="75px"><strong>Due Date</strong></th>
+                        <th width="100px"><strong>Posted Date</strong></th>
                         <th width="50px"><strong>Priority</strong></th>
+                        <th width="90px"><strong>Posted By</strong></th>
                         <th><strong>Actions</strong></th>
                     </tr>
                 </thead>
@@ -88,7 +67,9 @@
                     <tr>
                         <td width="300px">{{ c.name }}</td>
                         <td width="100px">{{ c.due_date }}</td>
+                        <td width="100px">{{ c.posted_date }}</td>
                         <td width="50px">{{ c.priority }}</td>
+                        <td width="50px">{{ c.poster.name }}</td>
                         <td>
                             <a href="{{ url_for('delete_entry', task_id=
                                 c.task_id) }}">Delete</a>

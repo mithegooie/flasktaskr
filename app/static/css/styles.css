@@ -1,6 +1,6 @@
 body {
-    font-family: sans-serif;
-    background: #eee;
+    padding: 60px 0px;
+    background: #ffffff;
 }
 
 a, h1, h2 {
@@ -18,6 +18,15 @@ h1 {
 
 h2 {
     font-size: 1.5em;
+}
+
+.footer {
+    padding-top: 30px;
+}
+
+.error {
+    color: red;
+    font-size: .8em;
 }
 
 .page {

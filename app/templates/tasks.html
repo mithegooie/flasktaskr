@@ -28,7 +28,8 @@
             </p>
             <p>
                 {{ form.priority.label }}
-                {{ form.priority }}
+                {{ form.priority(class="form-control", 
+                    style="max-width:60px;") }}
                 <span class="error">
                     {% if form.priority.errors %}
                         {% for error in form.priority.errors %}
@@ -37,15 +38,16 @@
                     {% endif %}
                 </span>
             </p>
-            <p><input class="button" type="submit" value="Submit"></p>
+            <p><button class="btn btn-sm btn-success" 
+                type="submit">Submit</button></p>
         </form>
     </div>
     <div class="entries">
         <br>
         <br>
-        <h2>Open tasks:</h2>
-        <div class="datagrid">
-            <table>
+        <div class="lead">Open tasks:</div>
+        <br>
+            <table class="table table-striped">
                 <thead>
                     <tr>
                         <th width="200px"><strong>Task Name</strong></th>
@@ -73,13 +75,13 @@
                 {% endfor %}
             </table>
         </div>
-        <br>
-        <br>
     </div>
+    <br>
+    <br>
     <div class="entries">
-        <h2>Closed tasks:</h2>
-        <div class="datagrid">
-            <table>
+        <div class="lead">Closed tasks:</div>
+        <br>
+            <table class="table table-striped">
                 <thead>
                     <tr>
                         <th width="200px"><strong>Task Name</strong></th>

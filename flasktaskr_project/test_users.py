@@ -4,7 +4,7 @@
 import os
 import unittest
 
-from project import app, db
+from project import app, db, bcrypt
 from config import basedir
 from project.models import Task, User
 
@@ -21,10 +21,13 @@ class TestUsers(unittest.TestCase):
     def setUp(self):
         app.config['TESTING'] = True
         app.config['WTF_CSRF_ENABLED'] = False
+        app.config['DEBUG'] = False
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
             os.path.join(basedir, TEST_DB)
         self.app = app.test_client()
         db.create_all()
+
+        self.assertEquals(app.debug, False)
 
     # executed after each test
     def tearDown(self):
@@ -34,7 +37,7 @@ class TestUsers(unittest.TestCase):
     # each test should start with 'test'
     def test_user_setup(self):
         new_user = User("mherman", "michael@mherman.org",
-                        "michaelherman")
+                        bcrypt.generate_password_hash("michaelherman"))
         db.session.add(new_user)
         db.session.commit()
         test = db.session.query(User).all()
@@ -63,7 +66,7 @@ class TestUsers(unittest.TestCase):
     def create_user(self):
         new_user = User(name='Michael', 
                         email='michael@realpython.com', 
-                        password='python')
+                        password=bcrypt.generate_password_hash('python'))
         db.session.add(new_user)
         db.session.commit()
 
@@ -181,6 +184,29 @@ class TestUsers(unittest.TestCase):
         print users
         for user in users:
             self.assertEquals(user.role, 'user')
+
+    ####################
+    #### blueprints ####
+    ####################
+
+    def test_404_error(self):
+        response = self.app.get('/this-route-does-not-exist/')
+        self.assertEquals(response.status_code, 404)
+        self.assertIn('Sorry. There\'s nothing here.', response.data)
+
+#    def test_500_error(self):
+#        bad_user = User(
+#            name='Jeremy',
+#            email='jeremy@realpython.com',
+#            password='django')
+#        db.session.add(bad_user)
+#        db.session.commit()
+#        response = self.login('Jeremy', 'django')
+#        self.assertEquals(response.status_code, 500)
+#        self.assertNotIn('ValueError: Invalid salt', response.data)
+#        self.assertIn('Something went terribly wrong.', response.data)
+
+
 
 
 if __name__ == "__main__":

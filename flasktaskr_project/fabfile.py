@@ -6,7 +6,7 @@ def test():
 
 def commit():
     message = raw_input("Enter a git commit message: ")
-    local("git add . && git commit -am '{}'".format(message))
+    local("cd .. && git add . && git commit -am '{}'".format(message))
 
 def push():
     local("git push -u origin master")

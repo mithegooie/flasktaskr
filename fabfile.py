@@ -1,8 +1,14 @@
-from fabric.api import local
+from fabric.api import local, settings, abort
+from fabric.contrib.console import confirm
 
 
 def test():
-    local("nosetests -v")
+    with settings(warn_only=True):
+        result = local("python flasktaskr_project/test_tasks.py -v && \
+                       python flasktaskr_project/test_users.py -v",
+                       capture=True)
+    if result.failed and not confirm("Tests failed. Continue?"):
+        abort("Aborted at user request.")
 
 def commit():
     message = raw_input("Enter a git commit message: ")

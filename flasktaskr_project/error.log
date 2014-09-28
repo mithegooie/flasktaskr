@@ -5,3 +5,7 @@
 404 error at 27-09-2014 20:15:50: http://localhost/this-route-does-not-exist/
 404 error at 27-09-2014 20:22:12: http://localhost/this-route-does-not-exist/
 404 error at 27-09-2014 20:23:29: http://localhost/this-route-does-not-exist/
+404 error at 27-09-2014 21:19:25: http://localhost/this-route-does-not-exist/
+404 error at 27-09-2014 22:00:22: http://localhost/api/tasks/2
+404 error at 27-09-2014 22:16:42: http://localhost/api/tasks/2
+404 error at 27-09-2014 22:35:05: http://localhost/this-route-does-not-exist/

@@ -15,7 +15,7 @@ def commit():
     local('git add . && git commit -am "{}"'.format(message))
 
 def push():
-    local("git push -u origin master")
+    local("git push origin master")
 
 def prepare():
     test()
